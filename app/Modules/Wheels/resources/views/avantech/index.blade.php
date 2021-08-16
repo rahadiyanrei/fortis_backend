@@ -3,10 +3,10 @@
   @include('component.heading')
   @include('component.js')
   @extends('component.body')
-  @section('pages','Pako Wheels')
+  @section('pages','Avantech Wheels')
   @section('content-helper')
     <div class="col-sm-2 ml-auto">
-      <a href="{{ url('wheel/pako/create') }}">
+      <a href="{{ url('wheel/avantech/create') }}">
         <button type="button" class="btn btn-block btn-info btn-sm">Create</button>
       </a>
     </div>
@@ -75,7 +75,7 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ url('/wheel/pako/'.$item->uuid) }}">
+                      <a href="{{ url('/wheel/avantech/'.$item->uuid) }}">
                         <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
                       </a>
                     </td>

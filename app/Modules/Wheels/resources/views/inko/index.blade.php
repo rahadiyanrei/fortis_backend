@@ -6,7 +6,7 @@
   @section('pages','Inko Wheels')
   @section('content-helper')
     <div class="col-sm-2 ml-auto">
-      <a href="{{ url('wheel/pako/create') }}">
+      <a href="{{ url('wheel/inko/create') }}">
           <button type="button" class="btn btn-block btn-info btn-sm">Create</button>
       </a>
     </div>
@@ -17,66 +17,74 @@
               <div class="card">
                   <div class="card-header">
                       <div class="card-tools">
-                          <div class="input-group input-group-sm" style="width: 150px;">
-                              <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                              <div class="input-group-append">
-                                  <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                              </div>
-                          </div>
+                            <form>
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="global_search" class="form-control float-right" value="{{ app('request')->input('global_search') }}" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                                </div>
+                            </form>
                       </div>
                   </div>
                   <div class="card-body table-responsive p-0">
                       <table class="table table-hover text-nowrap">
-                      <thead>
-                          <tr>
-                          <th>ID</th>
-                          <th>User</th>
-                          <th>Date</th>
-                          <th>Status</th>
-                          <th>Reason</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                          <td>183</td>
-                          <td>John Doe</td>
-                          <td>11-7-2014</td>
-                          <td><span class="tag tag-success">Approved</span></td>
-                          <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                          </tr>
-                          <tr>
-                          <td>219</td>
-                          <td>Alexander Pierce</td>
-                          <td>11-7-2014</td>
-                          <td><span class="tag tag-warning">Pending</span></td>
-                          <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                          </tr>
-                          <tr>
-                          <td>657</td>
-                          <td>Bob Doe</td>
-                          <td>11-7-2014</td>
-                          <td><span class="tag tag-primary">Approved</span></td>
-                          <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                          </tr>
-                          <tr>
-                          <td>175</td>
-                          <td>Mike Doe</td>
-                          <td>11-7-2014</td>
-                          <td><span class="tag tag-danger">Denied</span></td>
-                          <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                          </tr>
-                      </tbody>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>New Release</th>
+                                <th>Discontinued</th>
+                                <th>Status</th>
+                                <th>Sizes</th>
+                                <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($data as $item)
+                              <tr>
+                                <td>{{ $item->name }}</td>
+                                <td>
+                                  @if ($item->is_new_release === 1)
+                                    <span class="badge badge-success">Yes</span>
+                                  @else
+                                    <span class="badge badge-warning">No</span>
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($item->is_discontinued === 1)
+                                    <span class="badge badge-success">Yes</span>
+                                  @else
+                                    <span class="badge badge-warning">No</span>
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($item->status === 1)
+                                    <span class="badge badge-success">Active</span>
+                                  @else
+                                    <span class="badge badge-danger">Inactive</span>
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($item->sizes)
+                                      @foreach($item->sizes as $key => $size)
+                                        @if ($key !== 0), @endif
+                                        {{ $size->diameter }}"
+                                      @endforeach
+                                  @else
+                                      no data!
+                                  @endif
+                                </td>
+                                <td>
+                                  <a href="{{ url('/wheel/inko/'.$item->uuid) }}">
+                                    <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
+                                  </a>
+                                </td>
+                              </tr>
+                            @endforeach
+                          </tbody>
                       </table>
                   </div>
-                  <div class="card-footer clearfix">
-                      <ul class="pagination pagination-sm m-0 float-right">
-                          <li class="page-item"><a class="page-link" href="#">«</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">»</a></li>
-                      </ul>
-                  </div>
+                  @include('component.paginator')
               </div>
           </div>
       </div>

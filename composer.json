@@ -13,9 +13,11 @@
         "cartalyst/sentinel": "^5.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.3",
+        "imagekit/imagekit": "^1.2",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
+        "ramsey/uuid": "^4.2",
         "realrashid/sweet-alert": "^4.0"
     },
     "require-dev": {

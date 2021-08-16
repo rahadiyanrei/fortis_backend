@@ -31,6 +31,12 @@ $sentinel = Sentinel::getUser();
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far ion-android-image nav-icon"></i>
+                                <p>Banner</p>
+                            </a>
+                        </li>
                         <li class="nav-item has-treeview @if ($path === "/wheel") menu-open @endif">
                             <a href="#" class="nav-link @if ($path === "/wheel") active @endif">
                                 <i class="far ion-model-s nav-icon"></i>
@@ -51,13 +57,13 @@ $sentinel = Sentinel::getUser();
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ url('/wheel/fortis') }}" class="nav-link @if ($namePath === "fortis") active @endif">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Fortis</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ url('/wheel/avantech') }}" class="nav-link @if ($namePath === "avantech") active @endif">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Avantech</p>
                                     </a>
@@ -178,4 +184,5 @@ $sentinel = Sentinel::getUser();
 
         <aside class="control-sidebar control-sidebar-dark"></aside>
     </div>
+    @include('sweetalert::alert')
 </body>
