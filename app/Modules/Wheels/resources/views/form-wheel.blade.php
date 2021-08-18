@@ -3,9 +3,6 @@
     background-color: transparent;
   }
 </style>
-@php
-    // dd($data_detail);
-@endphp
 <form method="POST" action="{{ url($post_action) }}" enctype="multipart/form-data">
   @csrf
   <div class="card-body">

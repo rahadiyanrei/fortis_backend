@@ -32,7 +32,7 @@ $sentinel = Sentinel::getUser();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('banner') }}" class="nav-link @if ($path === "/banner") active @endif">
                                 <i class="far ion-android-image nav-icon"></i>
                                 <p>Banner</p>
                             </a>
