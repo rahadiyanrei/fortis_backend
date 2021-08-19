@@ -16,6 +16,15 @@ class RoleSeeder extends Seeder
     {
         $permission = [
             [
+                "name"=> "banner",
+                "access" => [
+                    "create"=> true,
+                    "read"=> true,
+                    "update"=> true,
+                    "delete"=> true
+                ]
+            ],
+            [
                 "name"=> "wheel",
                 "access" => [
                     "create"=> true,
