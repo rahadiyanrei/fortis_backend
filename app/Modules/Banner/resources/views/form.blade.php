@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="image_thumbnail">Image Banner</label>
+                <label for="image_thumbnail">Image Banner ({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}})</label>
                 <div class="col-md-12">
                   <img id="preview-image-before-upload" src="@if($data_detail->image) {{$data_detail->image}} @else {{ asset('img/product_image_not_found.gif') }} @endif" alt="preview image" style="max-height: 250px;">
                 </div>
