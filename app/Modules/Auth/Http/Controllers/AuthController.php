@@ -23,11 +23,17 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->except('_token');
-        if(!Sentinel::authenticate($credentials)){
-            // Alert::toast('The email or password you entered is incorrect!', 'error');
-            return redirect()->back()->with('toast_error','The email or password you entered is incorrect!')->withInput();
+        if ($request->has('remember')){
+            if(!Sentinel::authenticateAndRemember($credentials)){
+                // Alert::toast('The email or password you entered is incorrect!', 'error');
+                return redirect()->back()->with('toast_error','The email or password you entered is incorrect!')->withInput();
+            }
+        } else {
+            if(!Sentinel::authenticate($credentials)){
+                // Alert::toast('The email or password you entered is incorrect!', 'error');
+                return redirect()->back()->with('toast_error','The email or password you entered is incorrect!')->withInput();
+            }
         }
-        
         return redirect("dashboard");
     }
 

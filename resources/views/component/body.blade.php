@@ -1,6 +1,10 @@
 <?php 
-$path = Request::route()->action['prefix'];
-$namePath = Request::route()->getName();
+$path = "";
+$namePath= "";
+if (Request::route()){
+    $path = Request::route()->action['prefix'];
+    $namePath = Request::route()->getName();
+}
 $sentinel = Sentinel::getUser();
 ?>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -19,9 +23,9 @@ $sentinel = Sentinel::getUser();
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="info">
-                    <a href="#" class="d-block">{{ $sentinel->fullname }}</a>
-                </div>
+                    <div class="info">
+                        <a href="#" class="d-block">@if(isset($sentinel->fullname)) {{ $sentinel->fullname }} @else Error Page @endif</a>
+                    </div>
                 </div>
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -130,8 +134,8 @@ $sentinel = Sentinel::getUser();
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item @if ($path === "/contact") menu-open @endif">
+                            <a href="#" class="nav-link @if ($path === "/contact") active @endif">
                                 <i class="far ion-compass nav-icon"></i>
                                 <p>Contact</p>
                                 <i class="fas fa-angle-left right"></i>
@@ -141,6 +145,12 @@ $sentinel = Sentinel::getUser();
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dealer</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/contact/social_media') }}" class="nav-link @if ($namePath === "social_media") active @endif">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Social Media</p>
                                     </a>
                                 </li>
                             </ul>

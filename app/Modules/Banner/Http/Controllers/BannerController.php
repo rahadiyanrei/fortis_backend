@@ -96,7 +96,7 @@ class BannerController extends Controller
     public function post(Request $request){
         $auth = Sentinel::getUser();
         $action = 'Created';
-        if ($request->has('uuid')){
+        if (!$request->has('uuid')){
             $validate = $this->validateLimitBannerActive();
             if(!$validate){
                 return redirect()->back()->with('toast_error', 'You have reached a limit for Active Banner, the limit is '.$this->limit_banner)->withInput();
