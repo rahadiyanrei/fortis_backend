@@ -142,7 +142,7 @@ $sentinel = Sentinel::getUser();
                             </a>
                             <ul class="nav nav-treeview" style="padding-left: 10%">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ url('/contact/dealer') }}" class="nav-link @if ($namePath === "dealer") active @endif">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Dealer</p>
                                     </a>

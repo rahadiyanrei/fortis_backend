@@ -30,11 +30,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title" placeholder="Enter title (max 50 character)" value="{{ old('title', $data_detail->title) }}" maxlength="50" required>
+                <input name="title" type="text" class="form-control" id="title" placeholder="Enter title (max 50 character)" value="{{ old('title', $data_detail->title) }}" maxlength="50">
               </div>
               <div class="form-group">
                 <label for="body">Body</label>
-                <input name="body" type="text" class="form-control" id="body" placeholder="Enter body (max 100 character)" value="{{ old('body', $data_detail->body) }}" maxlength="100" required>
+                <input name="body" type="text" class="form-control" id="body" placeholder="Enter body (max 100 character)" value="{{ old('body', $data_detail->body) }}" maxlength="100">
               </div>
               <div class="form-group">
                 <label for="url_ref">URL Link</label>
