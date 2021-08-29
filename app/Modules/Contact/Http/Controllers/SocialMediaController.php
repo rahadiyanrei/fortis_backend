@@ -48,4 +48,21 @@ class SocialMediaController extends Controller
       }
       return redirect('/contact/social_media')->with('toast_success', 'Social Media Successfully updated!');;
     }
+
+    public function listAPI() {
+      $get = SocialMedia::first();
+      $data = [
+        'linkedIn' => $get ? $get->linkedin : null,
+        'twitter' => $get ? $get->twitter : null,
+        'facebook' => $get ? $get->facebook : null,
+        'youtube' => $get ? $get->youtube : null,
+        'instagram' => $get ? $get->instagram : null,
+      ];
+      $response = [
+        'data' => $data,
+        'status' => true,
+        'message' => 'success get Social Media'
+      ];
+      return response()->json($response);
+    }
 }

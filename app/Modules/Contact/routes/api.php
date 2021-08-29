@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api/dealer'], function(){
   Route::get('/', 'DealerAPIController@list');
 });
+
+Route::group(['prefix' => 'api/social_media'], function(){
+  Route::get('/', 'SocialMediaController@listAPI');
+});
