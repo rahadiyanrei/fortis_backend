@@ -8,7 +8,7 @@ INSERT INTO provinces (id,name) VALUES
 	 (17,'Bengkulu'),
 	 (18,'Lampung'),
 	 (19,'Kepulauan Bangka Belitung'),
-	 (21,'Kepulauan Riau')
+	 (21,'Kepulauan Riau'),
 	 (31,'Dki Jakarta'),
 	 (32,'Jawa Barat'),
 	 (33,'Jawa Tengah'),
@@ -18,7 +18,7 @@ INSERT INTO provinces (id,name) VALUES
 	 (51,'Bali'),
 	 (52,'Nusa Tenggara Barat'),
 	 (53,'Nusa Tenggara Timur'),
-	 (61,'Kalimantan Barat')
+	 (61,'Kalimantan Barat'),
 	 (62,'Kalimantan Tengah'),
 	 (63,'Kalimantan Selatan'),
 	 (64,'Kalimantan Timur'),
@@ -28,7 +28,7 @@ INSERT INTO provinces (id,name) VALUES
 	 (73,'Sulawesi Selatan'),
 	 (74,'Sulawesi Tenggara'),
 	 (75,'Gorontalo'),
-	 (76,'Sulawesi Barat')
+	 (76,'Sulawesi Barat'),
 	 (81,'Maluku'),
 	 (82,'Maluku Utara'),
 	 (91,'Papua Barat'),
