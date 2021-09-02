@@ -19,4 +19,8 @@ class WheelColor extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function image() {
+        return $this->hasMany(WheelColorImage::class, 'wheel_color_id', 'id');
+    }
 }

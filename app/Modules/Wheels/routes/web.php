@@ -22,3 +22,5 @@ Route::group(['prefix' => 'wheel', 'middleware' => 'auth.sentinel'], function(){
     Route::get('/avantech/create', 'WheelsController@wheelCreateFormView')->name('avantech');
     Route::get('/avantech/{uuid}', 'WheelsController@wheelView')->name('avantech');
 });
+
+Route::post('/upload-image','UploadController@upload');
