@@ -103,7 +103,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepper.next()">Next</button>
               </div>
               <!-- SIZE -->
               <div id="size-part" class="content fade" role="tabpanel" aria-labelledby="size-part-trigger">
@@ -126,8 +126,8 @@
                   </div>
                   @endforeach
                 </div>
-                <button type="button" class="btn btn-primary" onclick="stepper.previous()">Previous</button>
-                <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepper.previous()">Previous</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepper.next()">Next</button>
               </div>
               <!-- FINISHES -->
               <div id="color-part" class="content" role="tabpanel" aria-labelledby="color-part-trigger">
@@ -168,7 +168,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepper.previous()">Previous</button>
                 <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
               </div>
             </div>
