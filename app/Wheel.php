@@ -37,4 +37,12 @@ class Wheel extends Model
     public function sizes() {
         return $this->hasMany(WheelSize::class, 'wheel_id', 'id');
     }
+
+    public function createdBy() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function updatedBy() {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
 }

@@ -99,7 +99,7 @@ class WheelsController extends Controller
         if ($request->has('created')) {
             $stepper = 3;
         }
-        $getData = Wheel::where("uuid",$uuid)->with(['sizes','colors' => function($q){
+        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','colors' => function($q){
             $q->with(['image']);
         }])->first();
         $data_response = [
@@ -113,6 +113,22 @@ class WheelsController extends Controller
             'action' => 'view',
         ];
         return view("Wheels::view")->with($data_response);
+    }
+
+    public function wheelViewPage($uuid) {
+        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','colors' => function($q){
+            $q->with(['image']);
+        }])->first();
+        $data_response = [
+            'wheel_diameter' => $this->wheel_diameter,
+            'wheel_brand' => $this->namePath,
+            'update_action' => $this->post_redirect_prefix.'/'.$this->namePath.'/'.$uuid,
+            'image_thumbnail_dimension' => $this->image_thumbnail_dimension,
+            'uuid' => $uuid,
+            'data_detail' => $getData,
+            'action' => 'view',
+        ];
+        return view("Wheels::view_page")->with($data_response);
     }
 
     public function wheelCreateFormView(Request $request)
@@ -237,16 +253,17 @@ class WheelsController extends Controller
                         $wheelColorImage->save();
                     }
                 } else {
-                    $getImageColor = WheelColorImage::where('wheel_color_id', $pluckIDWheelColor[$key])->withTrashed()->get();
-                    foreach($getImageColor as $idx => $dataImg) {
-                        $wheelColorImage = new WheelColorImage;
-                        $wheelColorImage->wheel_color_id = $wheelColor->id;
-                        $wheelColorImage->image = $dataImg->image;
-                        $wheelColorImage->created_by = $auth->id;
-                        $wheelColorImage->updated_by = $auth->id;
-                        $wheelColorImage->save();
+                    if ($action === 'Updated'){
+                        $getImageColor = WheelColorImage::where('wheel_color_id', $pluckIDWheelColor[$key])->withTrashed()->get();
+                        foreach($getImageColor as $idx => $dataImg) {
+                            $wheelColorImage = new WheelColorImage;
+                            $wheelColorImage->wheel_color_id = $wheelColor->id;
+                            $wheelColorImage->image = $dataImg->image;
+                            $wheelColorImage->created_by = $auth->id;
+                            $wheelColorImage->updated_by = $auth->id;
+                            $wheelColorImage->save();
+                        }
                     }
-                    // dd($request->post('wheel_color'));
                 }
             }
             DB::commit();

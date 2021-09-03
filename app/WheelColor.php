@@ -12,7 +12,6 @@ class WheelColor extends Model
 
     protected $fillable = [
         'wheel_id',
-        'image',
         'color_hex',
         'created_by',
         'updated_by',

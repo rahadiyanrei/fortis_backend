@@ -36,6 +36,8 @@
                     <th>Discontinued</th>
                     <th>Status</th>
                     <th>Sizes</th>
+                    <th>Created By</th>
+                    <th>Updated By</th>
                     <th>Action</th>
                 </tr>
               </thead>
@@ -74,10 +76,17 @@
                           no data!
                       @endif
                     </td>
+                    <td>{{ $item->createdBy->fullname }}</td>
+                    <td>{{ $item->updatedBy->fullname }}</td>
                     <td>
-                      <a href="{{ url('/wheel/pako/'.$item->uuid) }}">
-                        <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
-                      </a>
+                      <div class="btn-group">
+                        <a href="{{ url('/wheel/pako/view/'.$item->uuid) }}" style="margin-right: 0.5rem">
+                          <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas ion-eye"></i>View</button>
+                        </a>
+                        <a href="{{ url('/wheel/pako/'.$item->uuid) }}">
+                          <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 @endforeach
