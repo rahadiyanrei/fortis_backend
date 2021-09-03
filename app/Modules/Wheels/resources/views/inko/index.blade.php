@@ -32,7 +32,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>New Release</th>
+                                <th>New Arrival</th>
                                 <th>Discontinued</th>
                                 <th>Status</th>
                                 <th>Sizes</th>

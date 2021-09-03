@@ -54,7 +54,7 @@
                     <div class="form-group">
                       <div class="custom-control custom-checkbox">
                         <input class="custom-control-input custom-cb" type="checkbox" id="is_new_release" name="is_new_release">
-                        <label for="is_new_release" class="custom-control-label">New Release</label>
+                        <label for="is_new_release" class="custom-control-label">New Arrival</label>
                       </div>
                       <div class="custom-control custom-checkbox">
                         <input class="custom-control-input custom-cb" type="checkbox" id="is_discontinued" name="is_discontinued">
