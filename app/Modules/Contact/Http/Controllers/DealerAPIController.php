@@ -16,7 +16,9 @@ class DealerAPIController extends Controller
      */
     public function list(Request $request)
     {
-        $dealer = Dealer::select(['uuid','lat','long','name','address','email','phone_number'])->where(function($query) use($request) {
+        $dealer = Dealer::select(['uuid','lat','long','name','address','email','phone_number','province_id'])
+        ->with('province')
+        ->where(function($query) use($request) {
             if ($request->get('province_id')) {
                 $query->where('province_id', $request->get('province_id'));
             }

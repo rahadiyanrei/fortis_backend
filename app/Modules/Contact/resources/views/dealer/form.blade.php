@@ -99,18 +99,24 @@
 
         function myMap() {
           const jakarta = { lat: -6.200000, lng: 106.816666 };
-          const map = new google.maps.Map(document.getElementById("googleMap"), {
+          let map = new google.maps.Map(document.getElementById("googleMap"), {
             zoom: 8,
             center: jakarta,
           });
           const latDB = "{!! $dealer->lat !!}"
           const lngDB = "{!! $dealer->long !!}"
           if (latDB && lngDB) {
+            const myLatlng = new google.maps.LatLng(parseFloat(latDB), parseFloat(lngDB));
+            map = new google.maps.Map(document.getElementById("googleMap"), {
+              zoom: 8,
+              center: myLatlng,
+            });
             const markerDB = new google.maps.Marker({
               position: { lat: parseFloat(latDB), lng: parseFloat(lngDB) },
               draggable: true,
               animation: google.maps.Animation.DROP,
               map: map,
+              center: myLatlng,
             });
             markerDB.addListener('dragend', handleDragMarker);
           }
