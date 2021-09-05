@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api/province'], function(){
   Route::get('/', 'ProvinceController@list');
 });
+
+Route::group(['prefix' => 'api/country'], function(){
+  Route::get('/', 'CountryController@list');
+});
+
+Route::group(['prefix' => 'api/city'], function(){
+  Route::get('/', 'CityController@list');
+});
