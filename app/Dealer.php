@@ -29,6 +29,10 @@ class Dealer extends Model
         return $this->hasOne(Province::class, 'id', 'province_id');
     }
 
+    public function wheel_dealer() {
+        return $this->hasMany(WheelDealer::class,'dealer_id','id');
+    }
+
     public function createdBy() {
         return $this->hasOne(User::class, 'id', 'created_by');
     }

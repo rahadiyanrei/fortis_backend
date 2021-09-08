@@ -5,6 +5,8 @@
 </style>
 <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/dropzone/min/dropzone.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 <form method="POST" action="{{ url($post_action) }}" id="form-wheel" enctype="multipart/form-data">
   @csrf
   <div class="row">
@@ -84,6 +86,14 @@
                     <div class="form-group">
                       <label>About</label>
                       <textarea class="form-control" name="about" rows="3">{{ old('about', $data_detail->about) }}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>Dealer</label>
+                      <select name='dealer[]' class="select2bs4" multiple="multiple" data-placeholder="Select a Dealer" style="width: 100%;">
+                        @foreach ($dealer as $item)
+                          <option value="{{ $item->id }}" @foreach($data_detail->dealer as $value) @if($value->dealer_id === $item->id) selected @endif @endforeach>{{ $item->name }}</option>
+                        @endforeach
+                      </select>
                     </div>
                     <div class="form-group">
                       <input type="checkbox" name="status" id="status" checked data-bootstrap-switch data-on-color="success">
@@ -178,37 +188,12 @@
     </div>
   </div>
 </form>
-{{-- <div class="modal fade" id="modal-color-image">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Upload Image</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="image_thumbnail">({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}})</label>
-              <div class="input-group">
-                <div class="custom-file">
-                  <input type="file" name="image" id="image_thumb" accept="image/png" multiple>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
 <script src="{{ asset('plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
+  $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
   document.addEventListener('DOMContentLoaded', function () {
     window.stepper = new Stepper(document.querySelector('.bs-stepper'),{
       animation:true

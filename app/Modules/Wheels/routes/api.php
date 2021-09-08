@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'api/wheel'], function(){
   Route::get('/new_arrival', 'WheelsAPIController@newArrival');
   Route::get('/list', 'WheelsAPIController@list');
+  Route::get('/retrieve/{uuid}', 'WheelsAPIController@retrieve');
 });

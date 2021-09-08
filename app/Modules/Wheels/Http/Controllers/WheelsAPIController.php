@@ -87,4 +87,36 @@ class WheelsAPIController extends Controller
       ];
       return response()->json($response);
     }
+
+    public function retrieve($uuid) {
+      $wheel = Wheel::where('uuid',$uuid)->with([
+        'sizes' => function ($q) {
+          $q->select(['id','wheel_id','diameter','option_width']);
+        },
+        'dealer' => function($q) {
+          $q->select(['id','wheel_id','dealer_id'])
+            ->with(['dealers' => function($qa) {
+              $qa->select(['id','name']);
+            }]);
+        },
+        'colors' => function ($q) {
+          $q->select(['id','wheel_id','color_name','color_hex'])
+          ->with(['image' => function ($qa){
+            $qa->select('id','wheel_color_id','image');
+          }]);
+        }
+        ])->first();
+      if(!$wheel) {
+        return response()->json([
+          "status" => false,
+          "message" => "Wheel not found!"
+        ],400);
+      }
+      $response = [
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success retrieve wheel"
+      ];
+      return response()->json($response);
+    }
 }

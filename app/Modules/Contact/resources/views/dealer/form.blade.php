@@ -98,11 +98,12 @@
         });
 
         function myMap() {
-          const jakarta = { lat: -6.200000, lng: 106.816666 };
+          const center = { lat: -0.502106, lng: 117.153709 };
           let map = new google.maps.Map(document.getElementById("googleMap"), {
-            zoom: 8,
-            center: jakarta,
+            zoom: 5,
+            center: center,
           });
+          let markerDB ;
           const latDB = "{!! $dealer->lat !!}"
           const lngDB = "{!! $dealer->long !!}"
           if (latDB && lngDB) {
@@ -111,7 +112,7 @@
               zoom: 8,
               center: myLatlng,
             });
-            const markerDB = new google.maps.Marker({
+            markerDB = new google.maps.Marker({
               position: { lat: parseFloat(latDB), lng: parseFloat(lngDB) },
               draggable: true,
               animation: google.maps.Animation.DROP,
@@ -132,7 +133,7 @@
           // more details for that place.
           searchBox.addListener("places_changed", () => {
             const places = searchBox.getPlaces();
-
+            markerDB.setMap(null);
             if (places.length == 0) {
               return;
             }

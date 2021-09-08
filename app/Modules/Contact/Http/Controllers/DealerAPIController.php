@@ -16,11 +16,18 @@ class DealerAPIController extends Controller
      */
     public function list(Request $request)
     {
-        $dealer = Dealer::select(['uuid','lat','long','name','address','email','phone_number','province_id'])
-        ->with('province')
+        $dealer = Dealer::select(['uuid','lat','long','name','address','email','phone_number','province_id']);
+
+        if ($request->get('wheel_id')) {
+            $dealer = $dealer->whereHas('wheel_dealer', function ($q)use($request){
+                $q->where('wheel_id', (int)$request->get('wheel_id'));
+            });
+        }
+
+        $dealer = $dealer->with('province')
         ->where(function($query) use($request) {
             if ($request->get('province_id')) {
-                $query->where('province_id', $request->get('province_id'));
+                $query->where('province_id', (int)$request->get('province_id'));
             }
         })->where('status',1)->orderBy('created_at','desc')->get();
         $response = [

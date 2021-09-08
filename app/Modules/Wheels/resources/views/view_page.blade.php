@@ -5,6 +5,8 @@
   @extends('component.body')
   @section('pages',ucfirst($wheel_brand).' Wheels')
   @section('content')
+  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}"> 
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -59,6 +61,13 @@
                   </label>
                   @endforeach
                 </div>
+                <hr>
+                <h4>Dealer</h4>
+                <ul>
+                  @foreach ($data_detail->dealer as $item)
+                  <li>{{ $item->dealers->name }}</li>
+                  @endforeach
+                </ul>
                 <div class="mt-4">
                   <a href="{{ url($update_action) }}">
                     <button type="button" class="btn btn-block btn-outline-secondary btn-xl"><i class="fas fa-edit"></i>Edit</button>
@@ -71,10 +80,14 @@
     </div>
   @endsection
   <script src="{{ asset('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+  <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
   <script>
       $.widget.bridge('uibutton', $.ui.button)
   </script>
   <script type="text/javascript">
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
     $(document).ready(function () {
       bsCustomFileInput.init();
       $('.product-image-thumb').on('click', function () {

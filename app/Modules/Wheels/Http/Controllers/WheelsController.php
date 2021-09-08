@@ -12,6 +12,8 @@ use App\Wheel;
 use App\WheelSize;
 use App\WheelColor;
 use App\WheelColorImage;
+use App\WheelDealer;
+use App\Dealer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Sentinel;
@@ -99,7 +101,8 @@ class WheelsController extends Controller
         if ($request->has('created')) {
             $stepper = 3;
         }
-        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','colors' => function($q){
+        $getDealer = Dealer::get();
+        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','dealer','colors' => function($q){
             $q->with(['image']);
         }])->first();
         $data_response = [
@@ -111,12 +114,13 @@ class WheelsController extends Controller
             'data_detail' => $getData,
             'stepper' => $stepper,
             'action' => 'view',
+            'dealer' => $getDealer
         ];
         return view("Wheels::view")->with($data_response);
     }
 
     public function wheelViewPage($uuid) {
-        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','colors' => function($q){
+        $getData = Wheel::where("uuid",$uuid)->with(['createdBy','updatedBy','sizes','dealer','colors' => function($q){
             $q->with(['image']);
         }])->first();
         $data_response = [
@@ -126,13 +130,14 @@ class WheelsController extends Controller
             'image_thumbnail_dimension' => $this->image_thumbnail_dimension,
             'uuid' => $uuid,
             'data_detail' => $getData,
-            'action' => 'view',
+            'action' => 'view'
         ];
         return view("Wheels::view_page")->with($data_response);
     }
 
     public function wheelCreateFormView(Request $request)
     {
+        $getDealer = Dealer::get();
         $default = new Wheel;
         $data_response = [
             'wheel_diameter' => $this->wheel_diameter,
@@ -142,12 +147,12 @@ class WheelsController extends Controller
             'data_detail' => $default,
             'stepper' => 1,
             'action' => 'create',
+            'dealer' => $getDealer
         ];
         return view("Wheels::".$this->namePath."/form", $data_response);
     }
 
     public function wheelCreateOrUpdateAction(Request $request,$brand){
-        // dd($request->all());
         $action = 'Created';
         $auth = Sentinel::getUser();
         $is_new = 0;
@@ -225,6 +230,7 @@ class WheelsController extends Controller
                 WheelSize::where('wheel_id', $wheel->id)->delete();
                 WheelColor::where('wheel_id', $wheel->id)->delete();
                 WheelColorImage::whereIn('wheel_color_id', $pluckIDWheelColor)->delete();
+                WheelDealer::where('wheel_id', $wheel->id)->delete();
             }
 
             foreach($reconArrayDiameter as $key => $value){
@@ -265,6 +271,15 @@ class WheelsController extends Controller
                         }
                     }
                 }
+            }
+
+            foreach($request->post('dealer') as $dealer_id) {
+                $wheelDealer = new WheelDealer;
+                $wheelDealer->wheel_id = $wheel->id;
+                $wheelDealer->dealer_id = $dealer_id;
+                $wheelDealer->created_by = $auth->id;
+                $wheelDealer->updated_by = $auth->id;
+                $wheelDealer->save();
             }
             DB::commit();
             return redirect($this->post_redirect_prefix.'/'.$request->post('brand'))->with('toast_success', ucfirst($request->post('brand')).' Wheel Successfully '.$action.'!');

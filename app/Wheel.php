@@ -45,4 +45,8 @@ class Wheel extends Model
     public function updatedBy() {
         return $this->hasOne(User::class, 'id', 'updated_by');
     }
+
+    public function dealer() {
+        return $this->hasMany(WheelDealer::class, 'wheel_id', 'id');
+    }
 }
