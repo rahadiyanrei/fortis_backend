@@ -55,6 +55,9 @@
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
+          <div class="overlay" style="display: none">
+            <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+          </div>
         </div>
         <div class="card-footer">
         </div>
@@ -72,7 +75,6 @@
             height: 500,
             callbacks: {
               onImageUpload: function(files, editor, welEditable) {
-                console.log("masuk")
                 sendFile(files[0]);
               }
             }
@@ -81,6 +83,7 @@
           function sendFile(file) {
             data = new FormData();
             data.append("image", file);
+            $('.overlay').show()
             $.ajax({
               data: data,
               type: "POST",
@@ -89,8 +92,9 @@
               contentType: false,
               processData: false,
               success: function(resp) {
+                $('.overlay').hide()
                 $('#summernote').summernote('insertImage', resp.url);
-              }
+              },
             });
           }
         });
