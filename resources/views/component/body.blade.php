@@ -100,7 +100,7 @@ $sentinel = Sentinel::getUser();
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('blog') }}" class="nav-link @if ($path === "/blog") active @endif">
                                 <i class="far ion-social-rss nav-icon"></i>
                                 <p>Blog</p>
                             </a>

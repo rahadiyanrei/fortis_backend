@@ -10,88 +10,92 @@
           background-color: transparent;
         }
       </style>
-      <form action="{{ url('/contact/dealer/post') }}" method="post">
-        @csrf
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <input type="text" class="form-control" id="pac-input" placeholder="Search Box" value="">
-                @if ($dealer->uuid)
-                <input type="text" name="uuid" class="form-control" value="{{ $dealer->uuid }}" style="display: none">
-                @endif
+      <div class="card">
+        <form action="{{ url('/contact/dealer/post') }}" method="post">
+          @csrf
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pac-input" placeholder="Search Box" value="">
+                  @if ($dealer->uuid)
+                  <input type="text" name="uuid" class="form-control" value="{{ $dealer->uuid }}" style="display: none">
+                  @endif
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div id="googleMap" style="width:100%;height:500px;"></div>
+              </div>
+            </div>
+            <div class="row" style="padding-top: 1rem">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="name">Dealer Name</label>
+                  <input name="name" type="text" class="form-control" id="name" placeholder="Enter dealer name (max 100 character)" value="{{ old('name', $dealer->name) }}" maxlength="100" required>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label for="address">Dealer Address</label>
+                  <input name="address" type="text" class="form-control" id="address" placeholder="Enter address name (max 200 character)" value="{{ old('address', $dealer->address) }}" maxlength="200" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="lat">Latitude</label>
+                  <input name="lat" type="text" class="form-control" id="lat" value="@if(isset($dealer->lat)) {{$dealer->lat}} @endif" readonly>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="lng">Longitude</label>
+                  <input name="long" type="text" class="form-control" id="lng" value="@if(isset($dealer->long)) {{$dealer->long}} @endif" readonly>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Province</label>
+                  <select name="province_id" class="form-control">
+                    @foreach ($province as $item)
+                    <option value="{{ $item->id }}" @if($dealer->province_id === $item->id) selected @endif>{{ $item->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="{{ old('email', $dealer->email) }}" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="phone_number">Phone Number</label>
+                  <input name="phone_number" type="number" class="form-control" id="phone_number" placeholder="Enter phone number" value="{{ old('phone_number', $dealer->phone_number) }}" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <input type="checkbox" name="status" id="status" checked data-bootstrap-switch data-on-color="success">
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div id="googleMap" style="width:100%;height:500px;"></div>
-            </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-          <div class="row" style="padding-top: 1rem">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="name">Dealer Name</label>
-                <input name="name" type="text" class="form-control" id="name" placeholder="Enter dealer name (max 100 character)" value="{{ old('name', $dealer->name) }}" maxlength="100" required>
-              </div>
-            </div>
-            <div class="col-md-8">
-              <div class="form-group">
-                <label for="address">Dealer Address</label>
-                <input name="address" type="text" class="form-control" id="address" placeholder="Enter address name (max 200 character)" value="{{ old('address', $dealer->address) }}" maxlength="200" required>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="lat">Latitude</label>
-                <input name="lat" type="text" class="form-control" id="lat" value="@if(isset($dealer->lat)) {{$dealer->lat}} @endif" readonly>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="lng">Longitude</label>
-                <input name="long" type="text" class="form-control" id="lng" value="@if(isset($dealer->long)) {{$dealer->long}} @endif" readonly>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>Province</label>
-                <select name="province_id" class="form-control">
-                  @foreach ($province as $item)
-                  <option value="{{ $item->id }}" @if($dealer->province_id === $item->id) selected @endif>{{ $item->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="{{ old('email', $dealer->email) }}" required>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label for="phone_number">Phone Number</label>
-                <input name="phone_number" type="number" class="form-control" id="phone_number" placeholder="Enter phone number" value="{{ old('phone_number', $dealer->phone_number) }}" required>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <input type="checkbox" name="status" id="status" checked data-bootstrap-switch data-on-color="success">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div class="card-footer">
+      </div>
       <script>
         $("input[data-bootstrap-switch]").each(function(){
           $(this).bootstrapSwitch('state',true);

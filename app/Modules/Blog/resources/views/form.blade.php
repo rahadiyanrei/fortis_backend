@@ -3,23 +3,29 @@
     @include('component.heading')
     @include('component.js')
     @extends('component.body')
-    @section('pages','Banner')
+    @section('pages','Blog')
     @section('content')
       <style>
         .card-footer{
           background-color: transparent;
         }
       </style>
-      <form method="POST" action="{{ url('banner/post') }}" enctype="multipart/form-data">
-        @csrf
-        <div class="card">
+      <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+      <link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">
+      <link rel="stylesheet" href="{{ asset('plugins/codemirror/theme/monokai.css') }}">
+      <form method="POST" action="{{ url('blog/post') }}" enctype="multipart/form-data">
+        <div class="card card-info">
+          @csrf
+          @if (isset($uuid))
+            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;"> 
+          @endif
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="image_thumbnail">Image Banner ({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}})</label>
+                  <label for="image_thumbnail">Blog Banner ({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}})</label>
                   <div class="col-md-12">
-                    <img id="preview-image-before-upload" src="@if($data_detail->image) {{$data_detail->image}} @else {{ asset('img/product_image_not_found.gif') }} @endif" alt="preview image" style="max-height: 250px;">
+                    <img id="preview-image-before-upload" src="@if($data_detail->image) {{$data_detail->image}} @else {{ asset('img/product_image_not_found.gif') }} @endif" alt="preview image" style="max-width: 100%">
                   </div>
                   <div class="input-group">
                     <div class="custom-file">
@@ -28,25 +34,21 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="title">Title</label>
-                  <input name="title" type="text" class="form-control" id="title" placeholder="Enter title (max 50 character)" value="{{ old('title', $data_detail->title) }}" maxlength="50">
+                  <input name="title" type="text" class="form-control" id="title" placeholder="Enter title (max 100 character)" autocomplete="off" value="{{ old('title', $data_detail->title) }}" maxlength="100">
                 </div>
-                <div class="form-group">
-                  <label for="body">Body</label>
-                  <input name="body" type="text" class="form-control" id="body" placeholder="Enter body (max 100 character)" value="{{ old('body', $data_detail->body) }}" maxlength="100">
-                </div>
-                <div class="form-group">
-                  <label for="url_ref">URL Link</label>
-                  <input name="url_ref" type="text" class="form-control" id="url_ref" placeholder="example: https://google.com or google.com" value="{{ old('url_ref', $data_detail->url_ref) }}" required>
-                </div>
+              </div>
+              <div class="col-md-12">
+                <textarea name="content" id="summernote">
+                  {{ old('content', $data_detail->content) }}
+                </textarea>
+              </div>
+              <div class="col-md-8">
                 <div class="form-group">
                   <input type="checkbox" name="status" id="status" checked data-bootstrap-switch data-on-color="success">
                 </div>
-                @if (isset($uuid))
-                  <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;"> 
-                @endif
               </div>
             </div>
           </div>
@@ -57,7 +59,41 @@
         <div class="card-footer">
         </div>
       </form>
+      <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+      <script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
+      <script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
+      <script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
+      <script src="{{ asset('plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
       <script type="text/javascript">
+        $(function () {
+          // Summernote
+          $('#summernote').summernote({
+            placeholder: 'write here...',
+            height: 500,
+            callbacks: {
+              onImageUpload: function(files, editor, welEditable) {
+                console.log("masuk")
+                sendFile(files[0]);
+              }
+            }
+          })
+
+          function sendFile(file) {
+            data = new FormData();
+            data.append("image", file);
+            $.ajax({
+              data: data,
+              type: "POST",
+              url: "{!! url('blog/imageUploadContent') !!}",
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function(resp) {
+                $('#summernote').summernote('insertImage', resp.url);
+              }
+            });
+          }
+        });
         var _URL = window.URL || window.webkitURL;
         $("#image_thumb").change(function(e) {
             var file, img;
