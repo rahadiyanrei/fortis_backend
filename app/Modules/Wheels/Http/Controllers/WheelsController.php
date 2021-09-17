@@ -273,13 +273,15 @@ class WheelsController extends Controller
                 }
             }
 
-            foreach($request->post('dealer') as $dealer_id) {
-                $wheelDealer = new WheelDealer;
-                $wheelDealer->wheel_id = $wheel->id;
-                $wheelDealer->dealer_id = $dealer_id;
-                $wheelDealer->created_by = $auth->id;
-                $wheelDealer->updated_by = $auth->id;
-                $wheelDealer->save();
+            if ($request->post('dealer')) {
+                foreach($request->post('dealer') as $dealer_id) {
+                    $wheelDealer = new WheelDealer;
+                    $wheelDealer->wheel_id = $wheel->id;
+                    $wheelDealer->dealer_id = $dealer_id;
+                    $wheelDealer->created_by = $auth->id;
+                    $wheelDealer->updated_by = $auth->id;
+                    $wheelDealer->save();
+                }
             }
             DB::commit();
             return redirect($this->post_redirect_prefix.'/'.$request->post('brand'))->with('toast_success', ucfirst($request->post('brand')).' Wheel Successfully '.$action.'!');
