@@ -35,6 +35,13 @@ class BlogController extends Controller
         ]);
     }
 
+    public function imageUploadGallery(Request $request) {
+        $uploadImage = $this->uploadImageToImageKit($request->file('image'),'gallery/content');
+        return response()->json([
+            'url' => $uploadImage->url
+        ]);
+    }
+
     private function uploadImageToImageKit($image, $folder) {
 
         $now = Carbon::now()->toDateString();
@@ -54,7 +61,7 @@ class BlogController extends Controller
 
     public function welcome(Request $request)
     {
-        $banner = Blog::where(function($query) use($request){
+        $blog = Blog::where(function($query) use($request){
             if ($request->get('global_search')) {
                 $query
                 ->whereRaw("title like '%".$request->get('global_search')."%'");
@@ -63,8 +70,7 @@ class BlogController extends Controller
         ->with(['createdBy'])
         ->paginate($this->paginate)
         ->withQueryString();
-        return view("Blog::index")->with('data', $banner);
-        return view("Blog::index");
+        return view("Blog::index")->with('data', $blog);
     }
 
     public function form() {

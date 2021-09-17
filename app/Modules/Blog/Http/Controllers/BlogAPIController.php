@@ -16,7 +16,6 @@ class BlogAPIController extends Controller
     public function list(Request $request) {
       $limit = $request->get('limit') ? (int)$request->get('limit') : 10;
       $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
-      $count = Blog::where('status',1)->get()->count();
       $data = Blog::where('status',1)
       ->with('createdBy')
       ->orderBy('created_at','desc')
@@ -24,7 +23,7 @@ class BlogAPIController extends Controller
       ->offset($offset)
       ->get();
       $response = [
-        "count" => $count,
+        "count" => count($data),
         "data" => $data,
         "status" => true,
         "message" => "Success get blogs"

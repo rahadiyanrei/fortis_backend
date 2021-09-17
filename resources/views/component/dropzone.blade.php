@@ -66,3 +66,4 @@
     </div>
   </div>
 </div>
+<script src="{{ asset('js/dropzone.js') }}"></script>
