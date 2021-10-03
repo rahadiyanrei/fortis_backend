@@ -119,4 +119,14 @@ class WheelsAPIController extends Controller
       ];
       return response()->json($response);
     }
+
+    public function dropdown(){
+      $wheel = Wheel::select(['id','name'])->where('status',1)->orderBy('name','DESC')->get();
+      $response = [
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success get wheel dropdown"
+      ];
+      return response()->json($response);
+    }
 }
