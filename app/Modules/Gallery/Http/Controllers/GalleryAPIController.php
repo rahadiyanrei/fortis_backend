@@ -45,7 +45,7 @@ class GalleryAPIController extends Controller
     $data = Gallery::where('uuid', $uuid)
     ->with(['wheel' => function($q){
       $q->with('colors');
-    },'img_gallery'])
+    },'img_gallery','vehicle_brand'])
     ->first();
     $response = [
       "data" => $data,
