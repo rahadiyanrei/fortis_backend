@@ -27,7 +27,7 @@ class GalleryAPIController extends Controller
     })
     ->with(['wheel' => function($q) {
       $q->with('sizes');
-    }])
+    },'vehicle_brand'])
     ->orderBy('created_at','desc')
     ->limit($limit)
     ->offset($offset)
