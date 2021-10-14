@@ -59,7 +59,8 @@ class GalleryAPIController extends Controller
     $getSingleVehicle = Gallery::select(['id','uuid','image_thumbnail'])
       ->where('dashboard_flag', 1)
       ->where('type','car')
-      ->inRandomOrder()
+      ->orderBy('created_at','desc')
+      // ->inRandomOrder()
       ->first();
     $getMultipleVehicle = Gallery::select(['id','uuid','image_thumbnail'])
       ->where(function($q)use($getSingleVehicle){
@@ -75,7 +76,8 @@ class GalleryAPIController extends Controller
     $getSingleWheel = Gallery::select(['id','uuid','image_thumbnail'])
       ->where('dashboard_flag', 1)
       ->where('type','wheel')
-      ->inRandomOrder()
+      // ->inRandomOrder()
+      ->orderBy('created_at','desc')
       ->first();
     $getMultipleWheel = Gallery::select(['id','uuid','image_thumbnail'])
       ->where(function($q)use($getSingleWheel){

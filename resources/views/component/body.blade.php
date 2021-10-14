@@ -91,37 +91,10 @@ $sentinel = Sentinel::getUser();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('apparel') }}" class="nav-link @if ($path === "/apparel") active @endif">
                                 <i class="far ion-tshirt nav-icon"></i>
                                 <p>Apparel</p>
-                                <i class="fas fa-angle-left right"></i>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hoodie</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Hat</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>T-shirt</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Polo shirt</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item @if ($path === "/contact") menu-open @endif">
                             <a href="#" class="nav-link @if ($path === "/contact") active @endif">
