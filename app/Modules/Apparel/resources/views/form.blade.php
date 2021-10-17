@@ -81,7 +81,7 @@
                     <label>Sizes</label>
                     <select name='sizes[]' class="select2bs4" multiple="multiple" data-placeholder="Select sizes" style="width: 100%;" required>
                       @foreach ($sizes as $size)
-                        <option value="{{ $size }}" @foreach(json_decode($data_detail->sizes) as $value) @if($value === $size) selected @endif @endforeach>{{ $size }}</option>
+                        <option value="{{ $size }}" @if($data_detail->sizes) @foreach(json_decode($data_detail->sizes) as $value) @if($value === $size) selected @endif @endforeach @endif>{{ $size }}</option>
                       @endforeach
                     </select>
                   </div>
