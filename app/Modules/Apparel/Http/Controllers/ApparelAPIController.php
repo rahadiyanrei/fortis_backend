@@ -29,7 +29,7 @@ class ApparelAPIController extends Controller
         $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
         $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'created_at';
         $orderType = $request->get('orderType') ? $request->get('orderType') : 'desc';
-        $category = $request->get('apparel_category_id') ? $request->get('apparel_category_id') : 'desc';
+        $category = $request->get('apparel_category_id');
         $apparel = Apparel::where(function($q)use($category){
             $q->where('status', 1);
             if ($category) $q->where('apparel_category_id', $category);
