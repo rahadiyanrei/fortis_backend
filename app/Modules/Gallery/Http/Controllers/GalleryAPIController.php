@@ -56,36 +56,40 @@ class GalleryAPIController extends Controller
   }
 
   public function gallery_dashboard() {
-    $getSingleVehicle = Gallery::select(['id','uuid','image_thumbnail'])
+    $getSingleVehicle = Gallery::select(['id','uuid','title','image_thumbnail','vehicle_brand_id'])
       ->where('dashboard_flag', 1)
       ->where('type','car')
+      ->with('vehicle_brand')
       ->orderBy('created_at','desc')
       // ->inRandomOrder()
       ->first();
-    $getMultipleVehicle = Gallery::select(['id','uuid','image_thumbnail'])
+    $getMultipleVehicle = Gallery::select(['id','uuid','title','image_thumbnail','vehicle_brand_id'])
       ->where(function($q)use($getSingleVehicle){
         $q->where('type','car');
         if ($getSingleVehicle) {
           $q->where('id','!=',$getSingleVehicle->id);
         }
       })
+      ->with('vehicle_brand')
       ->orderBy('created_at','desc')
       ->limit(5)
       ->get();
 
-    $getSingleWheel = Gallery::select(['id','uuid','image_thumbnail'])
+    $getSingleWheel = Gallery::select(['id','uuid','title','image_thumbnail','wheel_id'])
       ->where('dashboard_flag', 1)
       ->where('type','wheel')
+      ->with('wheel')
       // ->inRandomOrder()
       ->orderBy('created_at','desc')
       ->first();
-    $getMultipleWheel = Gallery::select(['id','uuid','image_thumbnail'])
+    $getMultipleWheel = Gallery::select(['id','uuid','title','image_thumbnail','wheel_id'])
       ->where(function($q)use($getSingleWheel){
         $q->where('type','wheel');
         if($getSingleWheel){
           $q->where('id','!=',$getSingleWheel->id);
         }
       })
+      ->with('wheel')
       ->orderBy('created_at','desc')
       ->limit(5)
       ->get();

@@ -137,7 +137,9 @@
           // more details for that place.
           searchBox.addListener("places_changed", () => {
             const places = searchBox.getPlaces();
-            markerDB.setMap(null);
+            if (markerDB) {
+              markerDB.setMap(null);
+            }
             if (places.length == 0) {
               return;
             }

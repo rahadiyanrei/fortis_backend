@@ -76,22 +76,32 @@
                     <input autocomplete="off" name="blibli_url" type="text" class="form-control" id="blibli_url" placeholder="Enter blibli link" value="{{ old('blibli_url', $data_detail->blibli_url) }}">
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Sizes</label>
-                    <select name='sizes[]' class="select2bs4" multiple="multiple" data-placeholder="Select sizes" style="width: 100%;" required>
-                      @foreach ($sizes as $size)
-                        <option value="{{ $size }}" @if($data_detail->sizes) @foreach(json_decode($data_detail->sizes) as $value) @if($value === $size) selected @endif @endforeach @endif>{{ $size }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
                 <div class="col-md-4" style="margin-top: 2rem">
-                  <button type="button" class="btn btn-default" data-toggle="modal" onclick="openModal()" data-target="#modal-xl">
+                  <button type="button" class="btn btn-default" data-toggle="modal" onclick="openModal()" data-target="#modal-xl" style="width: 100%">
                     Upload Apparel Galleries
                   </button>
                 </div>
-                <div class="col-md-4" style="margin-top: 2.25rem">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Sizes</label>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" id="allSizeCheckbox" name="is_all_sizes" onchange="allSizeFunc()" @if($data_detail->is_all_sizes === 1) checked @endif>
+                          <label for="allSizeCheckbox" class="custom-control-label">All Sizes</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <select name='sizes[]' id='sizes-option' class="select2bs4" multiple="multiple" data-placeholder="Select sizes" style="width: 100%;">
+                          @foreach ($sizes as $size)
+                            <option value="{{ $size }}" @if($data_detail->sizes) @foreach(json_decode($data_detail->sizes) as $value) @if($value === $size) selected @endif @endforeach @endif>{{ $size }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" style="margin-top: 2rem">
                   <div class="form-group">
                     <input type="checkbox" name="status" id="status" checked data-bootstrap-switch data-on-color="success">
                   </div>
@@ -156,7 +166,7 @@
     <script src="{{ asset('plugins/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
     <script type="text/javascript">
       $(function () {
-
+        allSizeFunc();
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
           event.preventDefault();
           $(this).ekkoLightbox({
@@ -248,6 +258,14 @@
       function openModal() {
         totalImage = 0;
         myDropzone.removeAllFiles(true)
+      }
+
+      function allSizeFunc() {
+        if ($('#allSizeCheckbox').is(':checked')){
+          $('#sizes-option').prop('disabled', true)
+        } else {
+          $('#sizes-option').prop('disabled', false)
+        }
       }
       $.widget.bridge('uibutton', $.ui.button)
     </script>

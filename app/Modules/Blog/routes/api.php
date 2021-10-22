@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'api/blog'], function(){
   Route::get('/', 'BlogAPIController@list');
+  Route::get('/dashboard', 'BlogAPIController@dashboard');
   Route::get('/{slug}', 'BlogAPIController@retrieve');
 });

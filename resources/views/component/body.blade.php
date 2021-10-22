@@ -117,14 +117,16 @@ $sentinel = Sentinel::getUser();
                                 </li>
                             </ul>
                         </li>
+                        {{-- @if($sentinel->id === 1) --}}
                         <li class="nav-item">
                             <a href="{{ url('admin') }}" class="nav-link @if ($path === "/admin") active @endif">
                                 <i class="far ion-ios-people nav-icon"></i>
                                 <p>Admin</p>
                             </a>
                         </li>
+                        {{-- @endif --}}
                         <li class="nav-item">
-                            <a href="{{ url('logout') }}" class="nav-link @if ($path === "/admin") active @endif">
+                            <a href="{{ url('logout') }}" class="nav-link">
                                 <i class="far ion-android-exit nav-icon"></i>
                                 <p>Logout</p>
                             </a>

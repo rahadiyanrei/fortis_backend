@@ -16,6 +16,7 @@ class Apparel extends Model
         'name',
         'apparel_category_id',
         'sizes',
+        'is_all_sizes',
         'description',
         'tokopedia_url',
         'shopee_url',

@@ -34,7 +34,7 @@
                                 <th>Name</th>
                                 <th>Category</th>
                                 <th>Sizes</th>
-                                <th>Image</th>
+                                <th>Image Thumbnail</th>
                                 <th>Status</th>
                                 <th>Created By</th>
                                 <th>Action</th>

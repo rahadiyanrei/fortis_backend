@@ -101,6 +101,10 @@ class ApparelController extends Controller
         if ($request->has('status')) {
             $status = 1;
         }
+        $allSizes = 0;
+        if ($request->has('is_all_sizes')) {
+            $allSizes = 1;
+        }
         try{
             DB::beginTransaction();
             $apparel = new Apparel;
@@ -119,7 +123,8 @@ class ApparelController extends Controller
             $apparel->bukalapak_url = $request->post('bukalapak_url');
             $apparel->lazada_url = $request->post('lazada_url');
             $apparel->blibli_url = $request->post('blibli_url');
-            $apparel->sizes = json_encode($request->post('sizes'));
+            $apparel->sizes = $request->post('sizes') && $allSizes === 0 ? json_encode($request->post('sizes')): null;
+            $apparel->is_all_sizes = $allSizes;
             $apparel->status = $status;
             if ($request->file('image_thumbnail')){
                 $uploadImage = $this->uploadImageToImageKit($request->file('image_thumbnail'));

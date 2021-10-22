@@ -10,11 +10,11 @@
           background-color: transparent;
         }
       </style>
-      <form method="POST" action="{{ url('create/post') }}">
+      <form method="POST" action="{{ url('admin/post') }}">
         <div class="card card-info">
           @csrf
-          @if (isset($uuid))
-            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;"> 
+          @if (isset($id))
+            <input name="id" type="text" id="id" class="form-control" value="{{ $id }}" style="display: none;"> 
           @endif
           <div class="card-body">
             <div class="row">
@@ -33,19 +33,19 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input name="password" type="password" class="form-control" id="password" placeholder="Enter password min 8 character" autocomplete="off" onkeyup='check();' value="" minlength="8" required>
+                  <input name="password" type="password" class="form-control" id="password" placeholder="Enter password min 8 character" autocomplete="off" onkeyup='check();' value="" minlength="8" @if(!isset($id)) required @endif>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="password">Confirmation Password</label>
-                  <input type="password" class="form-control" id="confirm_password" placeholder="Enter confirmation password min 8 character" autocomplete="off" onkeyup='check();' value="" minlength="8" required>
+                  <input type="password" class="form-control" id="confirm_password" placeholder="Enter confirmation password min 8 character" autocomplete="off" onkeyup='check();' value="" minlength="8" @if(!isset($id)) required @endif>
                 </div>
               </div>
             </div>
           </div>
           <div class="card-footer">
-            <button type="submit" id="btn-submit" class="btn btn-primary" disabled>Submit</button>
+            <button type="submit" id="btn-submit" class="btn btn-primary" @if(!isset($id)) disabled @endif >Submit</button>
           </div>
           <div class="overlay" style="display: none">
             <i class="fas fa-2x fa-sync-alt fa-spin"></i>

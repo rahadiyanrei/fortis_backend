@@ -46,4 +46,18 @@ class BlogAPIController extends Controller
       ];
       return response()->json($response);
     }
+
+    public function dashboard() {
+      $data = Blog::where('status',1)
+      ->with('createdBy')
+      ->orderBy('created_at','desc')
+      ->limit(2)
+      ->get();
+      $response = [
+        "data" => $data,
+        "status" => true,
+        "message" => "Success get blogs"
+      ];
+      return response()->json($response);
+    }
 }
