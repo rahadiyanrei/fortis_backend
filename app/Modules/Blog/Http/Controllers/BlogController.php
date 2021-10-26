@@ -130,4 +130,9 @@ class BlogController extends Controller
             return redirect()->back()->with('toast_error',$e->message())->withInput();
         }
     }
+
+    public function delete($uuid) {
+        Blog::where('uuid', $uuid)->delete();
+        return redirect('blog')->with('toast_success', ' Blog Successfully Deleted!');
+    }
 }

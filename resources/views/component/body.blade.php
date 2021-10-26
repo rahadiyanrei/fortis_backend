@@ -11,7 +11,7 @@ $sentinel = Sentinel::getUser();
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('img/pako/PAKO group 4-crop.png') }}" height="60" width="60">
+            <img class="animation__shake" src="{{ asset('img/pako/Favicon 192px.png') }}" height="60" width="60">
         </div>
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
@@ -19,16 +19,28 @@ $sentinel = Sentinel::getUser();
                     <a class="nav-link" data-widget="pushmenu" data-enable-remember="TRUE" data-no-transition-after-reload="TRUE" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ url('admin/profile') }}" class="nav-link" role="button">
+                      <i class="fas fa-user"></i>
+                    </a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
         </nav>
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="{{ url('dashboard') }}" class="brand-link">
-                <img src="{{  asset('img/pako/PAKO group 4-crop.png') }}" alt="Pako Logo" class="brand-image img-circle elevation-3" style="opacity: .8;margin-left: 0;">
+                <img src="{{  asset('img/pako/Favicon 192px.png') }}" alt="Pako Logo" class="brand-image img-circle elevation-3" style="opacity: .8;margin-left: 0;">
                 <span class="brand-text font-weight-light">{{ env('PROJECT_NAME') }} CMS</span>
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <a href="#" class="d-block">@if(isset($sentinel->fullname)) {{ $sentinel->fullname }} @else Error Page @endif</a>
+                        <a class="d-block">@if(isset($sentinel->fullname)) {{ $sentinel->fullname }} @else Error Page @endif</a>
                     </div>
                 </div>
                 <nav class="mt-2">
@@ -117,14 +129,14 @@ $sentinel = Sentinel::getUser();
                                 </li>
                             </ul>
                         </li>
-                        {{-- @if($sentinel->id === 1) --}}
+                        @if($sentinel->id === 1)
                         <li class="nav-item">
-                            <a href="{{ url('admin') }}" class="nav-link @if ($path === "/admin") active @endif">
+                            <a href="{{ url('admin') }}" class="nav-link @if ($namePath === "admin") active @endif">
                                 <i class="far ion-ios-people nav-icon"></i>
                                 <p>Admin</p>
                             </a>
                         </li>
-                        {{-- @endif --}}
+                        @endif
                         <li class="nav-item">
                             <a href="{{ url('logout') }}" class="nav-link">
                                 <i class="far ion-android-exit nav-icon"></i>

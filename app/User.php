@@ -21,7 +21,8 @@ class User extends CartalystUser
         'password',
         'fullname',
         'permissions',
-        'last_login'
+        'last_login',
+        'status'
     ];
 
     /**

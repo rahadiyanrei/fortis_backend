@@ -313,4 +313,9 @@ class WheelsController extends Controller
         ];
         return view("Wheels::inko/form", $data_response);
     }
+
+    public function delete($brand, $uuid){
+        Wheel::where('uuid', $uuid)->delete();
+        return redirect($this->post_redirect_prefix.'/'.$brand)->with('toast_success', ucfirst($brand).' Wheel Successfully Deleted!');
+    }
 }

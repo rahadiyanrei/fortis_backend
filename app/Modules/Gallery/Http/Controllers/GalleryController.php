@@ -58,7 +58,9 @@ class GalleryController extends Controller
                 ->whereRaw("title like '%".$request->get('global_search')."%'");
             }
         })->orderBy('created_at','desc')
-        ->with(['createdBy','vehicle_brand','wheel'])
+        ->with(['createdBy','vehicle_brand','wheel'=>function($q){
+            $q->withTrashed();
+        }])
         ->paginate($this->paginate)
         ->withQueryString();
         return view("Gallery::welcome")->with('data', $blog);
@@ -148,5 +150,10 @@ class GalleryController extends Controller
             DB::rollBack();
             return redirect()->back()->with('toast_error',$e->message())->withInput();
         }
+    }
+
+    public function delete($uuid) {
+        Gallery::where('uuid', $uuid)->delete();
+        return redirect('gallery')->with('toast_success', ' Gallery Successfully Deleted!');
     }
 }

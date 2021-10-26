@@ -79,13 +79,22 @@
                     <td>{{ $item->createdBy->fullname }}</td>
                     <td>{{ $item->updatedBy->fullname }}</td>
                     <td>
-                      <div class="btn-group">
-                        <a href="{{ url('/wheel/pako/view/'.$item->uuid) }}" style="margin-right: 0.5rem">
-                          <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas ion-eye"></i>View</button>
-                        </a>
-                        <a href="{{ url('/wheel/pako/'.$item->uuid) }}">
-                          <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
-                        </a>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <a href="{{ url('/wheel/pako/view/'.$item->uuid) }}" style="margin-right: 0.5rem">
+                            <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas ion-eye"></i>View</button>
+                          </a>
+                        </div>
+                        <div class="col-md-4">
+                          <a href="{{ url('/wheel/pako/'.$item->uuid) }}" style="margin-right: 0.5rem">
+                            <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
+                          </a>
+                        </div>
+                        <div class="col-md-4">
+                          <a href="#" data-toggle="modal" data-target="#modal-confirmation-delete">
+                            <button type="button" class="btn btn-block btn-outline-secondary btn-xs" onclick="deleteItem('{{ url('/wheel/pako/delete/'.$item->uuid) }}')"><i class="fas fa-trash"></i>Delete</button>
+                          </a>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -97,8 +106,32 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="modal-confirmation-delete">
+      <div class="modal-dialog">
+        <div class="modal-content bg-warning">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete?</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              Are you sure you want to delete it?
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+            <a href="#" id="deleteLink">
+              <button type="button" class="btn btn-outline-dark">OK</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   @endsection
-  <script>
+  <script type="text/javascript">
+    function deleteItem(route) {
+      $('#deleteLink').attr('href', route)
+    }
       $.widget.bridge('uibutton', $.ui.button)
   </script>
 

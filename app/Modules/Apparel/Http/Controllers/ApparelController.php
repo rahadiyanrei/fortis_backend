@@ -152,4 +152,9 @@ class ApparelController extends Controller
             return redirect()->back()->with('toast_error',$e->message())->withInput();
         }
     }
+
+    public function delete($uuid) {
+        Apparel::where('uuid', $uuid)->delete();
+        return redirect('apparel')->with('toast_success', ' Apparel Successfully Deleted!');
+    }
 }

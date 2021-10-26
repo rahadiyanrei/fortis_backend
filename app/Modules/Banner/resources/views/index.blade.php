@@ -60,9 +60,18 @@
                                     </td>
                                     <td>{{ $item->createdBy->fullname }}</td>
                                     <td>
-                                        <a href="{{ url('/banner/'.$item->uuid) }}">
-                                            <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
-                                        </a>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="{{ url('/banner/'.$item->uuid) }}">
+                                                    <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="#" data-toggle="modal" data-target="#modal-confirmation-delete">
+                                                    <button type="button" class="btn btn-block btn-outline-secondary btn-xs" onclick="deleteItem('{{ url('/banner/delete/'.$item->uuid) }}')"><i class="fas fa-trash"></i>Delete</button>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -96,10 +105,35 @@
               </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-confirmation-delete">
+            <div class="modal-dialog">
+              <div class="modal-content bg-warning">
+                <div class="modal-header">
+                  <h4 class="modal-title">Delete?</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete it?
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                  <a href="#" id="deleteLink">
+                    <button type="button" class="btn btn-outline-dark">OK</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
         <script type="text/javascript">
             function viewImage(src, title){
                 $('.modal-title').html(title)
                 $('#preview-image-before-upload').attr('src', src); 
+            }
+
+            function deleteItem(route) {
+                $('#deleteLink').attr('href', route)
             }
         </script>
     @endsection

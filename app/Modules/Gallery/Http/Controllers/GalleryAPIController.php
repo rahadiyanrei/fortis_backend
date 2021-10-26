@@ -27,6 +27,7 @@ class GalleryAPIController extends Controller
     })
     ->with(['wheel' => function($q) {
       $q->with('sizes');
+      $q->withTrashed();
     },'vehicle_brand'])
     ->orderBy('created_at','desc')
     ->limit($limit)
@@ -45,6 +46,7 @@ class GalleryAPIController extends Controller
     $data = Gallery::where('uuid', $uuid)
     ->with(['wheel' => function($q){
       $q->with('colors');
+      $q->withTrashed();
     },'img_gallery','vehicle_brand'])
     ->first();
     $response = [
@@ -78,7 +80,9 @@ class GalleryAPIController extends Controller
     $getSingleWheel = Gallery::select(['id','uuid','title','image_thumbnail','wheel_id'])
       ->where('dashboard_flag', 1)
       ->where('type','wheel')
-      ->with('wheel')
+      ->with(['wheel'=>function($q){
+        $q->withTrashed();
+      }])
       // ->inRandomOrder()
       ->orderBy('created_at','desc')
       ->first();
@@ -89,7 +93,11 @@ class GalleryAPIController extends Controller
           $q->where('id','!=',$getSingleWheel->id);
         }
       })
-      ->with('wheel')
+      ->with([
+        'wheel'=>function($q){
+          $q->withTrashed();
+        }
+      ])
       ->orderBy('created_at','desc')
       ->limit(5)
       ->get();

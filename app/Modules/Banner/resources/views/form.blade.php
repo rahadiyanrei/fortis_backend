@@ -17,7 +17,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="image_thumbnail">Image Banner ({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}})</label>
+                  <label for="image_thumbnail">Image Banner ({{$image_thumbnail_dimension['width']}} x {{$image_thumbnail_dimension['height']}}) 2 MB</label>
                   <div class="col-md-12">
                     <img id="preview-image-before-upload" src="@if($data_detail->image) {{$data_detail->image}} @else {{ asset('img/product_image_not_found.gif') }} @endif" alt="preview image" style="max-height: 250px;">
                   </div>
@@ -66,9 +66,18 @@
             if ((file = this.files[0])) {
               img = new Image();
               img.onload = function() {
+                
                 if (this.width !== dimensionWidth && this.height !== dimensionHeight)
                 {
                   alert(`Image Thumbnail dimension is not meet the requirement ( ${dimensionWidth} x ${dimensionHeight} px)`);
+                  const imageFromDB = "{!! $data_detail->image !!}";
+                  if (imageFromDB) clearImageThumbnail(imageFromDB)
+                  else defaultImageThumbnail()
+                  return;
+                }
+
+                if (file.size > 2097152) {
+                  alert(`Image Thumbnail size is not meet the requirement (2 MB)`);
                   const imageFromDB = "{!! $data_detail->image !!}";
                   if (imageFromDB) clearImageThumbnail(imageFromDB)
                   else defaultImageThumbnail()

@@ -136,4 +136,9 @@ class BannerController extends Controller
             return redirect()->back()->with('toast_error',$e->message())->withInput();
         }
     }
+
+    public function delete($uuid) {
+        Banner::where('uuid', $uuid)->delete();
+        return redirect($this->post_redirect_prefix)->with('toast_success', ' Banner Successfully Deleted!');
+    }
 }
