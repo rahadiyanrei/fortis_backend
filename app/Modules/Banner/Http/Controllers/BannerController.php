@@ -18,8 +18,8 @@ class BannerController extends Controller
     {
         $this->post_redirect_prefix = '/banner';
         $this->image_thumbnail_dimension = [
-            'width' => 1920,
-            'height' => 658
+            'width' => 1640,
+            'height' => 565
         ];
 
         $this->imageKit = new ImageKit(
