@@ -112,6 +112,18 @@ class WheelsAPIController extends Controller
           "message" => "Wheel not found!"
         ],400);
       }
+      $arrTemp = [];
+      foreach($wheel['sizes'] as $size) {
+        $rmvSpace = str_replace(' ', '', $size['option_width']);
+        $explodeWidth = explode('|', $rmvSpace);
+        foreach($explodeWidth as $width) {
+          array_push($arrTemp, "{$size['diameter']} x {$width}");
+        }
+      }
+      $wheel['size_string'] = "";
+      if (count($arrTemp) > 0) {
+        $wheel['size_string'] = join(" | ",$arrTemp);
+      }
       $response = [
         "data" => $wheel,
         "status" => true,

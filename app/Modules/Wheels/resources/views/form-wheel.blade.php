@@ -3,6 +3,9 @@
     background-color: transparent;
   }
 </style>
+<link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/codemirror/theme/monokai.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/bs-stepper/css/bs-stepper.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/dropzone/min/dropzone.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
@@ -85,7 +88,7 @@
                     </div>
                     <div class="form-group">
                       <label>About</label>
-                      <textarea class="form-control" name="about" rows="3">{{ old('about', $data_detail->about) }}</textarea>
+                      <textarea class="form-control" name="about" id="summernote">{{ old('about', $data_detail->about) }}</textarea>
                     </div>
                     <div class="form-group">
                       <label>Dealer</label>
@@ -137,6 +140,7 @@
                   @endforeach
                 </div>
                 <button type="button" class="btn btn-outline-secondary" onclick="stepper.previous()">Previous</button>
+                <button type="button" class="btn btn-outline-info" data-toggle="tooltip" title="Please add character | for multiple width's. ex: 8 | 8.5 | 9 | etc" disabled>Hover Me !</button>
                 <button type="button" class="btn btn-outline-secondary" onclick="stepper.next()">Next</button>
               </div>
               <!-- FINISHES -->
@@ -190,6 +194,11 @@
 </form>
 <script src="{{ asset('plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
+<script src="{{ asset('plugins/codemirror/mode/htmlmixed/htmlmixed.js') }}"></script>
 <script type="text/javascript">
   $('.select2bs4').select2({
       theme: 'bootstrap4'
@@ -204,6 +213,35 @@
   totalColorIndex.push(colorIndex)
 
   $(document).ready(function(){
+    // Summernote
+    $('#summernote').summernote({
+      placeholder: 'write here...',
+      height: 300,
+      callbacks: {
+        onImageUpload: function(files, editor, welEditable) {
+          sendFile(files[0]);
+        }
+      }
+    })
+
+    function sendFile(file) {
+      data = new FormData();
+      data.append("image", file);
+      $('.overlay').show()
+      $.ajax({
+        data: data,
+        type: "POST",
+        url: "{!! url('blog/imageUploadContent') !!}",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(resp) {
+          $('.overlay').hide()
+          $('#summernote').summernote('insertImage', resp.url);
+        },
+      });
+    }
+
     $('.my-colorpicker2').colorpicker()
 
     const dataColor = {!! $data_detail->colors !!}

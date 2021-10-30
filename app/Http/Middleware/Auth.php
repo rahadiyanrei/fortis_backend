@@ -26,6 +26,12 @@ class Auth
             Sentinel::logout();
             return redirect('auth')->with('toast_error','Your account has been banned!');
         }
+        if ($request->route()) {
+            $namePath = $request->route()->getName();
+            if ($namePath === 'admin' && $user->id !== 1) {
+                return redirect('dashboard')->with('toast_error','You are not eligible for admin module!');
+            } 
+        }
 
         return $next($request);
     }
