@@ -1,0 +1,144 @@
+<?php
+
+namespace App\Modules\Wheels\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Wheel;
+
+class WheelsAPIController extends Controller
+{
+    public function newArrival(Request $request) {
+      $limit = $request->get('limit') ? (int)$request->get('limit') : 4;
+      $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
+      $count = Wheel::where('status', 1)->where('is_new_release', 1)->get()->count();
+      $wheel = Wheel::select(['id','uuid','name','brand','image'])
+        ->with([
+          'sizes' => function($q) {
+            $q->select(['wheel_id','diameter']);
+          },
+          'colors' => function($q) {
+            $q->select(['wheel_id','color_name','color_hex']);
+          }
+        ])
+        ->where('status', 1)
+        ->where('is_new_release', 1)
+        ->orderBy('created_at','desc')
+        ->limit($limit)
+        ->offset($offset)
+        ->get();
+      $response = [
+        "count" => $count,
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success get wheel new arrival"
+      ];
+      return response()->json($response);
+    }
+
+    public function list(Request $request) {
+      $limit = $request->get('limit') ? (int)$request->get('limit') : 4;
+      $offset = $request->get('offset') ? (int)$request->get('offset') : 0;
+      $newRelease = $request->get('newRelease') ? (int)$request->get('newRelease') : 0;
+      $orderBy = $request->get('orderBy') ? $request->get('orderBy') : 'created_at';
+      $orderType = $request->get('orderType') ? $request->get('orderType') : 'desc';
+      $brand = $request->get('brand');
+      $brandExplode = [];
+      if ($brand) {
+        $brandExplode = explode(",", $brand);
+      }
+      $count = Wheel::where(function ($q) use($brandExplode,$newRelease) {
+        $q->where('status', 1);
+        if (count($brandExplode) !== 0) {
+          $q->whereIn('brand', $brandExplode);
+        }
+        if ($newRelease === 1) {
+          $q->where('is_new_release', 1);
+        }
+      })->get()->count();
+      $wheel = Wheel::select(['id','uuid','name','brand','image'])
+        ->with([
+          'sizes' => function($q) {
+            $q->select(['wheel_id','diameter']);
+          },
+          'colors' => function($q) {
+            $q->select(['id','wheel_id','color_name','color_hex']);
+          }
+        ])
+        ->where(function ($q) use($brandExplode,$newRelease) {
+          $q->where('status', 1);
+          if (count($brandExplode) !== 0) {
+            $q->whereIn('brand', $brandExplode);
+          }
+          if ($newRelease === 1) {
+            $q->where('is_new_release', 1);
+          }
+        })
+        ->orderBy($orderBy, $orderType)
+        ->limit($limit)
+        ->offset($offset)
+        ->get();
+      
+      $response = [
+        "count" => $count,
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success get wheel list"
+      ];
+      return response()->json($response);
+    }
+
+    public function retrieve($uuid) {
+      $wheel = Wheel::where('uuid',$uuid)->with([
+        'sizes' => function ($q) {
+          $q->select(['id','wheel_id','diameter','option_width']);
+        },
+        'dealer' => function($q) {
+          $q->select(['id','wheel_id','dealer_id'])
+            ->with(['dealers' => function($qa) {
+              $qa->select(['id','name']);
+            }]);
+        },
+        'colors' => function ($q) {
+          $q->select(['id','wheel_id','color_name','color_hex'])
+          ->with(['image' => function ($qa){
+            $qa->select('id','wheel_color_id','image');
+          }]);
+        }
+        ])->first();
+      if(!$wheel) {
+        return response()->json([
+          "status" => false,
+          "message" => "Wheel not found!"
+        ],400);
+      }
+      $arrTemp = [];
+      foreach($wheel['sizes'] as $size) {
+        $rmvSpace = str_replace(' ', '', $size['option_width']);
+        $explodeWidth = explode('|', $rmvSpace);
+        foreach($explodeWidth as $width) {
+          array_push($arrTemp, "{$size['diameter']} x {$width}");
+        }
+      }
+      $wheel['size_string'] = "";
+      if (count($arrTemp) > 0) {
+        $wheel['size_string'] = join(" | ",$arrTemp);
+      }
+      $response = [
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success retrieve wheel"
+      ];
+      return response()->json($response);
+    }
+
+    public function dropdown(){
+      $wheel = Wheel::select(['id','name'])->where('status',1)->orderBy('name','DESC')->get();
+      $response = [
+        "data" => $wheel,
+        "status" => true,
+        "message" => "Success get wheel dropdown"
+      ];
+      return response()->json($response);
+    }
+}

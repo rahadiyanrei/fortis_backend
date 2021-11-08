@@ -30,59 +30,83 @@
                         <thead>
                             <tr>
                             <th>ID</th>
-                            <th>User</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Reason</th>
+                            <th>Fullname</th>
+                            <th>Email</th>
+                            <th>Last Login</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <td>183</td>
-                            <td>John Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-success">Approved</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                            <td>219</td>
-                            <td>Alexander Pierce</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-warning">Pending</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                            <td>657</td>
-                            <td>Bob Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-primary">Approved</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                            <td>175</td>
-                            <td>Mike Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-danger">Denied</span></td>
-                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td>
+                                        {{ $item->id }}
+                                    </td>
+                                    <td>
+                                        {{ $item->fullname }}
+                                    </td>
+                                    <td>
+                                        {{ $item->email }}
+                                    </td>
+                                    <td>
+                                        {{ $item->last_login ? Carbon\Carbon::parse($item->last_login)->diffForHumans() : 'Not yet' }}
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="{{ url('/admin/'.$item->id) }}">
+                                                    <button type="button" class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-edit"></i>Edit</button>
+                                                </a>
+                                            </div>
+                                            @if($item->status === 1)
+                                            <div class="col-md-6">
+                                                <a href="#" data-toggle="modal" data-target="#modal-confirmation-delete">
+                                                    <button type="button" class="btn btn-block btn-outline-secondary btn-xs" onclick="deleteItem('{{ url('/admin/ban/'.$item->id) }}')"><i class="fas fa-ban"></i>Ban</button>
+                                                </a>
+                                            </div>
+                                            @else
+                                            <div class="col-md-6">
+                                                <button type="button" class="btn btn-block btn-outline-secondary btn-xs" disabled><i class="fas fa-ban"></i>Banned</button>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                         </table>
                     </div>
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination-sm m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">«</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">»</a></li>
-                        </ul>
-                    </div>
+                    @include('component.paginator')
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modal-confirmation-delete">
+            <div class="modal-dialog">
+              <div class="modal-content bg-warning">
+                <div class="modal-header">
+                  <h4 class="modal-title">Ban?</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to ban this account?
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                  <a href="#" id="deleteLink">
+                    <button type="button" class="btn btn-outline-dark">OK</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
     @endsection
-    <script>
+    <script type="text/javascript">
         $.widget.bridge('uibutton', $.ui.button)
+        function deleteItem(route) {
+            $('#deleteLink').attr('href', route)
+        }
     </script>
 
 </html>

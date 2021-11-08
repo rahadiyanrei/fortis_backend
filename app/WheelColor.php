@@ -12,11 +12,14 @@ class WheelColor extends Model
 
     protected $fillable = [
         'wheel_id',
-        'image',
         'color_hex',
         'created_by',
         'updated_by',
         'created_at',
         'updated_at'
     ];
+
+    public function image() {
+        return $this->hasMany(WheelColorImage::class, 'wheel_color_id', 'id');
+    }
 }

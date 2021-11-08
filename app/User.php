@@ -6,10 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Cartalyst\Sentinel\Users\EloquentUser as CartalystUser;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends CartalystUser
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +21,8 @@ class User extends CartalystUser
         'password',
         'fullname',
         'permissions',
-        'last_login'
+        'last_login',
+        'status'
     ];
 
     /**

@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wheel extends Model
 {
     // Uuid::uuid4()->toString();
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'uuid',
@@ -19,6 +20,10 @@ class Wheel extends Model
         'is_discontinued',
         'brand',
         'about',
+        'PCD',
+        'ET',
+        'hub',
+        'type',
         'status',
         'created_by',
         'updated_by',
@@ -32,5 +37,17 @@ class Wheel extends Model
 
     public function sizes() {
         return $this->hasMany(WheelSize::class, 'wheel_id', 'id');
+    }
+
+    public function createdBy() {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function updatedBy() {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
+
+    public function dealer() {
+        return $this->hasMany(WheelDealer::class, 'wheel_id', 'id');
     }
 }

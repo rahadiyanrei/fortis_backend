@@ -1,0 +1,5 @@
+<?php
+
+/**
+ *	Gallery Helpers
+ */
