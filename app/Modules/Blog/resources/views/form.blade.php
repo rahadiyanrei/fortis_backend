@@ -17,7 +17,7 @@
         <div class="card card-info">
           @csrf
           @if (isset($uuid))
-            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;"> 
+            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;">
           @endif
           <div class="card-body">
             <div class="row">
@@ -77,7 +77,7 @@
               onImageUpload: function(files, editor, welEditable) {
                 sendFile(files[0]);
               }
-            }
+            },
           })
 
           function sendFile(file) {
@@ -122,23 +122,23 @@
                   return;
                 }
                 let reader = new FileReader();
-                reader.onload = (e) => { 
-                  $('#preview-image-before-upload').attr('src', e.target.result); 
+                reader.onload = (e) => {
+                  $('#preview-image-before-upload').attr('src', e.target.result);
                 }
-                reader.readAsDataURL(file); 
+                reader.readAsDataURL(file);
               };
                 img.src = _URL.createObjectURL(file);
               }
           });
-        
+
         function clearImageThumbnail(src){
-          $("#image_thumb").val(""); 
-          $('#preview-image-before-upload').attr('src', src); 
+          $("#image_thumb").val("");
+          $('#preview-image-before-upload').attr('src', src);
         }
 
         function defaultImageThumbnail(){
-          $("#image_thumb").val(""); 
-          $('#preview-image-before-upload').attr('src', "{{ asset('img/product_image_not_found.gif') }}"); 
+          $("#image_thumb").val("");
+          $('#preview-image-before-upload').attr('src', "{{ asset('img/product_image_not_found.gif') }}");
         }
 
         $("input[data-bootstrap-switch]").each(function(){
