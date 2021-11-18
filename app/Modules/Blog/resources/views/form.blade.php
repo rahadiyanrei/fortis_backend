@@ -10,7 +10,7 @@
           background-color: transparent;
         }
       </style>
-      <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+      <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
       <link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">
       <link rel="stylesheet" href="{{ asset('plugins/codemirror/theme/monokai.css') }}">
       <form method="POST" action="{{ url('blog/post') }}" enctype="multipart/form-data">
@@ -62,7 +62,7 @@
         <div class="card-footer">
         </div>
       </form>
-      <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+      <script src="{{ asset('plugins/summernote/summernote-bs4.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
