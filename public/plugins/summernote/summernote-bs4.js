@@ -9086,8 +9086,11 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
         return false;
       }
 
+      // $video.addClass('note-video-clip');
+      // $video.css({"position":"absolute","top":"0","left":"0","bottom":"0","right":"0","border":"none"})
+      // return $video[0];
       var $embed;
-      var $embed = $('<div>').addClass('embed-responsive').addClass('embed-responsive-16by9');
+      var $embed = $('<div>').css({"text-align":"center","width":"100%"});
 
       $video.addClass('embed-responsive-item');
       $video.appendTo($embed);
