@@ -52,11 +52,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('storage/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('storage/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('js/adminlte.min.js') }}"></script>
+<script src="{{ asset('storage/js/adminlte.min.js') }}"></script>
 @include('sweetalert::alert')
 </body>
 </html>
