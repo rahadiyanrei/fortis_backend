@@ -9,9 +9,6 @@
         .card-footer{
           background-color: transparent;
         }
-        .note-video-clip{
-          width: 100%
-        }
       </style>
       <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
       <link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">

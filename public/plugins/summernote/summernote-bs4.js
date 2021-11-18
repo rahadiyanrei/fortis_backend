@@ -9090,7 +9090,7 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
       // $video.css({"position":"absolute","top":"0","left":"0","bottom":"0","right":"0","border":"none"})
       // return $video[0];
       var $embed;
-      var $embed = $('<div>').css({"text-align":"center","width":"100%"});
+      var $embed = $('<div>').css({"width":"100%","display":"flex","align-items":"center","justify-content":"center"});
 
       $video.addClass('embed-responsive-item');
       $video.appendTo($embed);
