@@ -9086,16 +9086,17 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
         return false;
       }
 
-      // $video.addClass('note-video-clip');
-      // $video.css({"position":"absolute","top":"0","left":"0","bottom":"0","right":"0","border":"none"})
-      // return $video[0];
-      var $embed;
-      var $embed = $('<div>').css({"width":"100%","display":"flex","align-items":"center","justify-content":"center"});
+      $video.addClass('note-video-clip');
+      $video.css({"margin":"0 auto","display":"block"})
+      return $video[0];
 
-      $video.addClass('embed-responsive-item');
-      $video.appendTo($embed);
+      // var $embed;
+      // var $embed = $('<div>').css({"width":"100%","display":"flex","align-items":"center","justify-content":"center"});
 
-      return $embed[0];
+      // $video.addClass('embed-responsive-item');
+      // $video.appendTo($embed);
+
+      // return $embed[0];
     }
   }, {
     key: "show",
