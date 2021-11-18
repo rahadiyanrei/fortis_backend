@@ -1,14 +1,14 @@
 /*!
- * 
+ *
  * Super simple wysiwyg editor v0.8.18
  * https://summernote.org
- * 
- * 
+ *
+ *
  * Copyright 2013- Alan Hong. and other contributors
  * summernote may be freely distributed under the MIT license.
- * 
+ *
  * Date: 2020-05-20T16:47Z
- * 
+ *
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -9086,8 +9086,16 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
         return false;
       }
 
-      $video.addClass('note-video-clip');
-      return $video[0];
+      // $video.addClass('note-video-clip');
+      // $video.css({"position":"absolute","top":"0","left":"0","bottom":"0","right":"0","border":"none"})
+      // return $video[0];
+      var $embed;
+      var $embed = $('<div>').css({"width":"100%","display":"flex","align-items":"center","justify-content":"center"});
+
+      $video.addClass('embed-responsive-item');
+      $video.appendTo($embed);
+
+      return $embed[0];
     }
   }, {
     key: "show",

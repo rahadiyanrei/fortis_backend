@@ -111,9 +111,9 @@ class BlogController extends Controller
             } else {
                 $blog->uuid = Str::uuid();
                 $blog->created_by = $auth->id;
+                $random = Str::random(10);
+                $blog->slug = Str::slug($request->post('title').' '.$random, '-');
             }
-            $random = Str::random(10);
-            $blog->slug = Str::slug($request->post('title').' '.$random, '-');
             $blog->title = $request->post('title');
             $blog->content = $request->post('content');
             $blog->status = $status;

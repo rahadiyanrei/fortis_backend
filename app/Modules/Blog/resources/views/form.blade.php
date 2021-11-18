@@ -10,14 +10,14 @@
           background-color: transparent;
         }
       </style>
-      <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+      <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
       <link rel="stylesheet" href="{{ asset('plugins/codemirror/codemirror.css') }}">
       <link rel="stylesheet" href="{{ asset('plugins/codemirror/theme/monokai.css') }}">
       <form method="POST" action="{{ url('blog/post') }}" enctype="multipart/form-data">
         <div class="card card-info">
           @csrf
           @if (isset($uuid))
-            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;"> 
+            <input name="uuid" type="text" id="uuid" class="form-control" value="{{ $uuid }}" style="display: none;">
           @endif
           <div class="card-body">
             <div class="row">
@@ -62,7 +62,7 @@
         <div class="card-footer">
         </div>
       </form>
-      <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+      <script src="{{ asset('plugins/summernote/summernote-bs4.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/codemirror.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/mode/css/css.js') }}"></script>
       <script src="{{ asset('plugins/codemirror/mode/xml/xml.js') }}"></script>
@@ -77,7 +77,7 @@
               onImageUpload: function(files, editor, welEditable) {
                 sendFile(files[0]);
               }
-            }
+            },
           })
 
           function sendFile(file) {
@@ -122,23 +122,23 @@
                   return;
                 }
                 let reader = new FileReader();
-                reader.onload = (e) => { 
-                  $('#preview-image-before-upload').attr('src', e.target.result); 
+                reader.onload = (e) => {
+                  $('#preview-image-before-upload').attr('src', e.target.result);
                 }
-                reader.readAsDataURL(file); 
+                reader.readAsDataURL(file);
               };
                 img.src = _URL.createObjectURL(file);
               }
           });
-        
+
         function clearImageThumbnail(src){
-          $("#image_thumb").val(""); 
-          $('#preview-image-before-upload').attr('src', src); 
+          $("#image_thumb").val("");
+          $('#preview-image-before-upload').attr('src', src);
         }
 
         function defaultImageThumbnail(){
-          $("#image_thumb").val(""); 
-          $('#preview-image-before-upload').attr('src', "{{ asset('img/product_image_not_found.gif') }}"); 
+          $("#image_thumb").val("");
+          $('#preview-image-before-upload').attr('src', "{{ asset('img/product_image_not_found.gif') }}");
         }
 
         $("input[data-bootstrap-switch]").each(function(){
