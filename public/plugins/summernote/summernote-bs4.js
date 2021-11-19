@@ -9087,7 +9087,7 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
       }
 
       $video.addClass('note-video-clip');
-      $video.css({"margin":"0 auto","display":"block"})
+      $video.css({"margin":"0 auto","display":"block","max-width":"100%"})
       return $video[0];
 
       // var $embed;
